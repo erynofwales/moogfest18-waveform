@@ -63,6 +63,7 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
                 for j in 0..<GameViewController.numberOfBallsPerSide {
                     let ijSphere = sphere.clone()
                     balls.append(ijSphere)
+                    ijSphere.name = "sphere\(i),\(j)"
                     ijSphere.worldPosition = SCNVector3(x: CGFloat(-GameViewController.numberOfBallsPerSide / 2) + CGFloat(i),
                                                         y: 0.0,
                                                         z: CGFloat(-GameViewController.numberOfBallsPerSide / 2) + CGFloat(j))
