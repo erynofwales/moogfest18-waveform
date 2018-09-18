@@ -134,8 +134,6 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
 
     // MARK: - SCNRendererDelegate
 
-    static let numberOfSteps = 100
-    var step = 0
     var maxY = 0.0
     var minY = 0.0
 
@@ -144,10 +142,9 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
             for x in 0..<GameViewController.numberOfBallsPerSide {
                 let idx = z * GameViewController.numberOfBallsPerSide + x
                 let node = balls[idx]
-                let delay = delayForSphereAt(x: x, y: z)
-                //let inputX = 2.0 * Double.pi * Double(step) / Double(GameViewController.numberOfSteps) + delay
 
-                let inputX = 2.0 / 3.0 * time + delay
+                let delay = delayForSphereAt(x: x, y: z)
+                let inputX = 0.5 * time + delay
                 let y = sin(inputX) + sin(2.0 * inputX) + sin(4.0 * inputX) + sin(8.0 * inputX)
 
                 node.worldPosition.y = CGFloat(y)
@@ -158,7 +155,6 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
                 node.scale = SCNVector3(x: scale, y: scale, z: scale)
             }
         }
-        step = (step + 1) % GameViewController.numberOfSteps
     }
 
     func map(_ x: Double, inMin: Double, inMax: Double, outMin: Double, outMax: Double) -> Double {
