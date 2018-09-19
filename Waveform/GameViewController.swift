@@ -141,10 +141,10 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate, SlidersDel
 
                 node.worldPosition.y = CGFloat(y)
 
-//                maxY = max(y, maxY)
-//                minY = min(y, minY)
-//                let scale = CGFloat(map(y, inMin: minY, inMax: maxY, outMin: 0.0, outMax: 1.0))
-//                node.scale = SCNVector3(x: scale, y: scale, z: scale)
+                maxY = max(y, maxY)
+                minY = min(y, minY)
+                let scale = CGFloat(map(y, inMin: minY, inMax: maxY, outMin: 0.0, outMax: 1.0))
+                node.scale = SCNVector3(x: scale, y: scale, z: scale)
             }
         }
     }

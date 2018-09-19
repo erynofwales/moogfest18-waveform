@@ -689,7 +689,7 @@
                     <window key="window" title="Waveform" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="640" height="480"/>
+                        <rect key="contentRect" x="604" y="232" width="1024" height="768"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="k2e-pw-aVG"/>
@@ -722,7 +722,7 @@
                 </windowController>
                 <customObject id="iRi-Ej-oW3" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="791" y="145"/>
+            <point key="canvasLocation" x="903" y="256"/>
         </scene>
         <!--Sliders View Controller-->
         <scene sceneID="6UM-zR-5jl">
@@ -821,7 +821,7 @@
                                         <rect key="frame" x="130" y="0.0" width="40" height="210"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ay7-F5-evc">
-                                                <rect key="frame" x="2" y="193" width="37" height="17"/>
+                                                <rect key="frame" x="1" y="193" width="37" height="17"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="YSA-oE-loQ">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -829,7 +829,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tch-ld-F3c">
-                                                <rect key="frame" x="11" y="22" width="19" height="165"/>
+                                                <rect key="frame" x="10" y="22" width="19" height="165"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="160" id="Vq6-rC-6xs"/>
                                                 </constraints>
@@ -915,8 +915,12 @@
                             </stackView>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ctd-Z9-shR" secondAttribute="bottom" id="5rF-vK-MXh"/>
+                            <constraint firstItem="ctd-Z9-shR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="G46-dl-VJF" secondAttribute="leading" id="OLQ-Kf-AdH"/>
                             <constraint firstItem="ctd-Z9-shR" firstAttribute="centerY" secondItem="G46-dl-VJF" secondAttribute="centerY" id="gsF-99-F1Q"/>
                             <constraint firstItem="ctd-Z9-shR" firstAttribute="centerX" secondItem="G46-dl-VJF" secondAttribute="centerX" id="iaa-lI-gN2"/>
+                            <constraint firstItem="ctd-Z9-shR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="G46-dl-VJF" secondAttribute="top" id="oPe-C6-ymW"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ctd-Z9-shR" secondAttribute="trailing" id="z8s-ze-TfX"/>
                         </constraints>
                     </view>
                     <connections>
@@ -933,14 +937,14 @@
                 </viewController>
                 <customObject id="bdX-YK-Cho" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="791" y="580"/>
+            <point key="canvasLocation" x="903" y="686"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="GameViewController" customModule="Waveform" customModuleProvider="target" sceneMemberID="viewController">
                     <sceneView key="view" loops="NO" preferredRenderingAPI="-1" id="RvT-eo-GD2">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </sceneView>
                     <connections>
@@ -949,7 +953,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="817"/>
+            <point key="canvasLocation" x="75" y="1217"/>
         </scene>
     </scenes>
 </document>
