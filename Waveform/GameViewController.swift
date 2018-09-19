@@ -9,7 +9,14 @@
 import SceneKit
 import QuartzCore
 
-class GameViewController: NSViewController, SCNSceneRendererDelegate {
+protocol SlidersDelegate: AnyObject {
+    func delayXScaleAdjusted(newValue: Double)
+    func delayYScaleAdjusted(newValue: Double)
+    func inputXScaleAdjusted(newValue: Double)
+    func inputYScaleAdjusted(newValue: Double)
+}
+
+class GameViewController: NSViewController, SCNSceneRendererDelegate, SlidersDelegate {
     static let numberOfBallsPerSide = 41
 
     private var balls = [SCNNode]()
@@ -83,7 +90,7 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
         sceneView.scene = scene
         
         // allows the user to manipulate the camera
-        sceneView.allowsCameraControl = false
+        sceneView.allowsCameraControl = true
         
         // show statistics such as fps and timing information
         sceneView.showsStatistics = true
@@ -92,11 +99,29 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
         sceneView.backgroundColor = NSColor.black
     }
 
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        performSegue(withIdentifier: NSStoryboardSegue.Identifier("showSliders"), sender: self)
+    }
+
+    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+        if segue.identifier == NSStoryboardSegue.Identifier("showSliders") {
+            let windowController = segue.destinationController as? NSWindowController
+            let slidersViewController = windowController?.contentViewController as? SlidersViewController
+            slidersViewController?.delegate = self
+        }
+    }
+
     func delayForSphereAt(x: Int, y: Int) -> Double {
-        return 0.05 * Double(x) + 0.03 * Double(y)
+        return 0.05 * Double(x) + 0.05 * Double(y)
     }
 
     // MARK: - SCNRendererDelegate
+
+    var delayXScale = 0.05
+    var delayYScale = 0.05
+    var inputXScale = 2.0
+    var inputYScale = 2.0
 
     var maxY = 0.0
     var minY = 0.0
@@ -107,21 +132,88 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
                 let idx = z * GameViewController.numberOfBallsPerSide + x
                 let node = balls[idx]
 
-                let delay = delayForSphereAt(x: x, y: z)
-                let inputX = 0.5 * time + delay
-                let y = (sin(inputX) + sin(2.0 * inputX) + sin(4.0 * inputX) + sin(8.0 * inputX)) / 2.0
+                //let delay = delayForSphereAt(x: x, y: z)
+                let delayX = delayXScale * Double(x)
+                let delayY = delayYScale * Double(z)
+                let inputX = inputXScale * (time + delayX)
+                let inputY = inputYScale * (time + delayY)
+                let y = sin(inputX) + sin(2.0 * inputX) + sin(inputY) + sin(2.0 * inputY)
 
                 node.worldPosition.y = CGFloat(y)
 
-                maxY = max(y, maxY)
-                minY = min(y, minY)
-                let scale = CGFloat(map(y, inMin: minY, inMax: maxY, outMin: 0.0, outMax: 1.0))
-                node.scale = SCNVector3(x: scale, y: scale, z: scale)
+//                maxY = max(y, maxY)
+//                minY = min(y, minY)
+//                let scale = CGFloat(map(y, inMin: minY, inMax: maxY, outMin: 0.0, outMax: 1.0))
+//                node.scale = SCNVector3(x: scale, y: scale, z: scale)
             }
         }
     }
 
+    // MARK: - SlidersDelegate
+
+    func delayXScaleAdjusted(newValue: Double) {
+        delayXScale = newValue
+    }
+
+    func delayYScaleAdjusted(newValue: Double) {
+        delayYScale = newValue
+    }
+
+    func inputXScaleAdjusted(newValue: Double) {
+        inputXScale = newValue
+    }
+
+    func inputYScaleAdjusted(newValue: Double) {
+        inputYScale = newValue
+    }
+
+    // MARK: - Private
+
     func map(_ x: Double, inMin: Double, inMax: Double, outMin: Double, outMax: Double) -> Double {
         return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
+    }
+}
+
+class SlidersViewController: NSViewController {
+    weak var delegate: SlidersDelegate?
+
+    @IBOutlet weak var delayXSlider: NSSlider!
+    @IBOutlet weak var delayYSlider: NSSlider!
+    @IBOutlet weak var inputXSlider: NSSlider!
+    @IBOutlet weak var inputYSlider: NSSlider!
+
+    @IBOutlet weak var delayXLabel: NSTextField!
+    @IBOutlet weak var delayYLabel: NSTextField!
+    @IBOutlet weak var inputXLabel: NSTextField!
+    @IBOutlet weak var inputYLabel: NSTextField!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        delayXLabel.stringValue = formatValueForLabel(delayXSlider.doubleValue)
+        delayYLabel.stringValue = formatValueForLabel(delayYSlider.doubleValue)
+        inputXLabel.stringValue = formatValueForLabel(inputXSlider.doubleValue)
+        inputYLabel.stringValue = formatValueForLabel(inputYSlider.doubleValue)
+    }
+
+    @IBAction func sliderValueDidChange(_ sender: Any) {
+        if let slider = sender as? NSSlider {
+            if slider == delayXSlider {
+                delegate?.delayXScaleAdjusted(newValue: slider.doubleValue)
+                delayXLabel.stringValue = formatValueForLabel(slider.doubleValue)
+            } else if slider == delayYSlider {
+                delegate?.delayYScaleAdjusted(newValue: slider.doubleValue)
+                delayYLabel.stringValue = formatValueForLabel(slider.doubleValue)
+            } else if slider == inputXSlider {
+                delegate?.inputXScaleAdjusted(newValue: slider.doubleValue)
+                inputXLabel.stringValue = formatValueForLabel(slider.doubleValue)
+            } else if slider == inputYSlider {
+                delegate?.inputYScaleAdjusted(newValue: slider.doubleValue)
+                inputYLabel.stringValue = formatValueForLabel(slider.doubleValue)
+            }
+        }
+    }
+
+    func formatValueForLabel(_ value: Double) -> String {
+        return String(format: "%.3f", value)
     }
 }

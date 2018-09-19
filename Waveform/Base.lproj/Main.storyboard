@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12047" systemVersion="16B2336" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13151"/>
-        <plugIn identifier="com.apple.SceneKitIBPlugin" version="13151"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.SceneKitIBPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -675,7 +676,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Waveform" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -702,14 +703,249 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
+        <!--Window Controller-->
+        <scene sceneID="mLe-K3-3ti">
+            <objects>
+                <windowController id="tuK-Fu-qZ4" sceneMemberID="viewController">
+                    <window key="window" title="Tweaks" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="k7z-O8-CoW">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="461" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+                        <connections>
+                            <outlet property="delegate" destination="tuK-Fu-qZ4" id="co1-O8-Xxx"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="yMW-NM-UvY" kind="relationship" relationship="window.shadowedContentViewController" id="qXv-YQ-SzR"/>
+                    </connections>
+                </windowController>
+                <customObject id="iRi-Ej-oW3" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="791" y="145"/>
+        </scene>
+        <!--Sliders View Controller-->
+        <scene sceneID="6UM-zR-5jl">
+            <objects>
+                <viewController id="yMW-NM-UvY" customClass="SlidersViewController" customModule="Waveform" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="G46-dl-VJF">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="24" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ctd-Z9-shR">
+                                <rect key="frame" x="124" y="30" width="233" height="210"/>
+                                <subviews>
+                                    <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B3m-EO-fjf">
+                                        <rect key="frame" x="0.0" y="0.0" width="41" height="210"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yt2-5q-c0D">
+                                                <rect key="frame" x="2" y="193" width="37" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="pXe-aX-5iZ">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5cL-pW-0Bd">
+                                                <rect key="frame" x="11" y="22" width="19" height="165"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="160" id="x3r-i0-jlF"/>
+                                                </constraints>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" maxValue="0.20000000000000001" doubleValue="0.050000000000000003" tickMarkPosition="right" sliderType="linear" id="p8j-Mg-X5w"/>
+                                                <connections>
+                                                    <action selector="sliderValueDidChange:" target="yMW-NM-UvY" id="UbN-vr-Yeq"/>
+                                                </connections>
+                                            </slider>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eto-0z-qbs">
+                                                <rect key="frame" x="-2" y="0.0" width="45" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="delayX" id="Jrv-Te-kYO">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                    <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vZc-Ye-XdL">
+                                        <rect key="frame" x="65" y="0.0" width="41" height="210"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Si-lr-HDw">
+                                                <rect key="frame" x="2" y="193" width="37" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="gRY-TB-ewv">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZIu-6c-RN1">
+                                                <rect key="frame" x="11" y="22" width="19" height="165"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="160" id="HKf-zx-w0f"/>
+                                                </constraints>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" maxValue="0.20000000000000001" doubleValue="0.050000000000000003" tickMarkPosition="right" sliderType="linear" id="Fri-8s-sBJ"/>
+                                                <connections>
+                                                    <action selector="sliderValueDidChange:" target="yMW-NM-UvY" id="XYs-l4-gaj"/>
+                                                </connections>
+                                            </slider>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tif-XZ-S5j">
+                                                <rect key="frame" x="-2" y="0.0" width="45" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="delayY" id="wjb-O1-xZ9">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                    <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6vC-xT-CNw">
+                                        <rect key="frame" x="130" y="0.0" width="40" height="210"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ay7-F5-evc">
+                                                <rect key="frame" x="2" y="193" width="37" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="YSA-oE-loQ">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tch-ld-F3c">
+                                                <rect key="frame" x="11" y="22" width="19" height="165"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="160" id="Vq6-rC-6xs"/>
+                                                </constraints>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" maxValue="8" doubleValue="2" tickMarkPosition="right" sliderType="linear" id="abB-gf-PqJ"/>
+                                                <connections>
+                                                    <action selector="sliderValueDidChange:" target="yMW-NM-UvY" id="iMn-2b-Ved"/>
+                                                </connections>
+                                            </slider>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GTD-9U-Czf">
+                                                <rect key="frame" x="-2" y="0.0" width="44" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="inputX" id="bUS-pE-qba">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                    <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SpG-o6-Hl2">
+                                        <rect key="frame" x="194" y="0.0" width="39" height="210"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UDu-gZ-nWb">
+                                                <rect key="frame" x="1" y="193" width="37" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="Wce-5K-cxY">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7en-bz-iR4">
+                                                <rect key="frame" x="10" y="22" width="19" height="165"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="160" id="fzC-Q2-OR4"/>
+                                                </constraints>
+                                                <sliderCell key="cell" continuous="YES" alignment="left" maxValue="8" doubleValue="2" tickMarkPosition="right" sliderType="linear" id="M1t-VK-VL7"/>
+                                                <connections>
+                                                    <action selector="sliderValueDidChange:" target="yMW-NM-UvY" id="ghJ-6u-ZHm"/>
+                                                </connections>
+                                            </slider>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RYW-63-1vb">
+                                                <rect key="frame" x="-2" y="0.0" width="43" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="inputY" id="OZo-7M-OUB">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="ctd-Z9-shR" firstAttribute="centerY" secondItem="G46-dl-VJF" secondAttribute="centerY" id="gsF-99-F1Q"/>
+                            <constraint firstItem="ctd-Z9-shR" firstAttribute="centerX" secondItem="G46-dl-VJF" secondAttribute="centerX" id="iaa-lI-gN2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="delayXLabel" destination="Yt2-5q-c0D" id="M0T-B5-TDb"/>
+                        <outlet property="delayXSlider" destination="5cL-pW-0Bd" id="uET-mq-k3L"/>
+                        <outlet property="delayYLabel" destination="0Si-lr-HDw" id="atb-eh-PXJ"/>
+                        <outlet property="delayYSlider" destination="ZIu-6c-RN1" id="Sd3-pN-wCR"/>
+                        <outlet property="inputXLabel" destination="Ay7-F5-evc" id="29R-9p-MFo"/>
+                        <outlet property="inputXSlider" destination="tch-ld-F3c" id="u3F-4d-iIw"/>
+                        <outlet property="inputYLabel" destination="UDu-gZ-nWb" id="zrf-Ij-tpB"/>
+                        <outlet property="inputYSlider" destination="7en-bz-iR4" id="lQN-mF-KRI"/>
+                        <outlet property="view" destination="G46-dl-VJF" id="Nof-qF-zDH"/>
+                    </connections>
+                </viewController>
+                <customObject id="bdX-YK-Cho" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="791" y="580"/>
+        </scene>
         <!--Game View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="GameViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="GameViewController" customModule="Waveform" customModuleProvider="target" sceneMemberID="viewController">
                     <sceneView key="view" loops="NO" preferredRenderingAPI="-1" id="RvT-eo-GD2">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </sceneView>
+                    <connections>
+                        <segue destination="tuK-Fu-qZ4" kind="show" identifier="showSliders" id="x7c-iq-BCs"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
