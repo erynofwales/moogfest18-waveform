@@ -63,10 +63,15 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
                 for j in 0..<GameViewController.numberOfBallsPerSide {
                     let ijSphere = sphere.clone()
                     balls.append(ijSphere)
+
                     ijSphere.name = "sphere\(i),\(j)"
                     ijSphere.worldPosition = SCNVector3(x: CGFloat(-GameViewController.numberOfBallsPerSide / 2) + CGFloat(i),
                                                         y: 0.0,
                                                         z: CGFloat(-GameViewController.numberOfBallsPerSide / 2) + CGFloat(j))
+
+                    let ijMaterial = ijSphere.geometry!.firstMaterial!.copy() as! SCNMaterial
+                    ijSphere.geometry!.replaceMaterial(at: 0, with: ijMaterial)
+
                     sphereContainer.addChildNode(ijSphere)
                 }
             }
@@ -85,48 +90,6 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
         
         // configure the view
         sceneView.backgroundColor = NSColor.black
-        
-        // Add a click gesture recognizer
-        let clickGesture = NSClickGestureRecognizer(target: self, action: #selector(handleClick(_:)))
-        var gestureRecognizers = sceneView.gestureRecognizers
-        gestureRecognizers.insert(clickGesture, at: 0)
-        sceneView.gestureRecognizers = gestureRecognizers
-    }
-    
-    @objc
-    func handleClick(_ gestureRecognizer: NSGestureRecognizer) {
-        // retrieve the SCNView
-        let scnView = self.view as! SCNView
-        
-        // check what nodes are clicked
-        let p = gestureRecognizer.location(in: scnView)
-        let hitResults = scnView.hitTest(p, options: [:])
-        // check that we clicked on at least one object
-        if hitResults.count > 0 {
-            // retrieved the first clicked object
-            let result = hitResults[0]
-            
-            // get its material
-            let material = result.node.geometry!.firstMaterial!
-            
-            // highlight it
-            SCNTransaction.begin()
-            SCNTransaction.animationDuration = 0.5
-            
-            // on completion - unhighlight
-            SCNTransaction.completionBlock = {
-                SCNTransaction.begin()
-                SCNTransaction.animationDuration = 0.5
-                
-                material.emission.contents = NSColor.black
-                
-                SCNTransaction.commit()
-            }
-            
-            material.emission.contents = NSColor.red
-            
-            SCNTransaction.commit()
-        }
     }
 
     func delayForSphereAt(x: Int, y: Int) -> Double {
@@ -146,7 +109,7 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
 
                 let delay = delayForSphereAt(x: x, y: z)
                 let inputX = 0.5 * time + delay
-                let y = sin(inputX) + sin(2.0 * inputX) + sin(4.0 * inputX) + sin(8.0 * inputX)
+                let y = (sin(inputX) + sin(2.0 * inputX) + sin(4.0 * inputX) + sin(8.0 * inputX)) / 2.0
 
                 node.worldPosition.y = CGFloat(y)
 
@@ -159,6 +122,6 @@ class GameViewController: NSViewController, SCNSceneRendererDelegate {
     }
 
     func map(_ x: Double, inMin: Double, inMax: Double, outMin: Double, outMax: Double) -> Double {
-        return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+        return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
     }
 }
